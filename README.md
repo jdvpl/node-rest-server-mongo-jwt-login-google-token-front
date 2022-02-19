@@ -21,3 +21,7 @@ Continuacion del servidor anterior que era basico en este si incluye bases de da
 
 ### ver logs de heroku en vivo en la consola 
 ``` heroku logs -n 100 --tail ```
+
+### documentacion
+
+``` https://documenter.getpostman.com/view/16893611/UVkjvdNT ```
