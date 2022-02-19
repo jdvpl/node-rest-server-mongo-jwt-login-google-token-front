@@ -10,7 +10,6 @@ const esAdminRole=(req,res=response,next)=>{
   if(role !=="ADMIN_ROLE"){
     return res.status(401).json({msg: `${name} no tiene permiso no es administrador`})
   }
-  console.log(role,name)
   next();
 }
 

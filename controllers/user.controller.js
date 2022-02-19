@@ -28,7 +28,6 @@ const userPut=async(req, res=response) => {
   }
 
   const usuario=await User.findByIdAndUpdate(id, resto)
-  console.log(id);
   res.json(
     usuario
     );
