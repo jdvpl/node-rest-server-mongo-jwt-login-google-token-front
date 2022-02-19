@@ -42,11 +42,34 @@ const googleSignin = async(req, res=response) => {
   const {id_token}=req.body;
 
   try {
-    const googleUser = await googleVerify(id_token);
-    console.log(googleUser)
-    res.json({id_token})
+    const {name,email,image} = await googleVerify(id_token);
+
+    let usuario=await Usuario.findOne({email})
+
+    if (!usuario) {
+      console.log("Usurio no econtrado")
+      // crear en la bd
+      const data={
+        name,
+        email,
+        password:'kakaroto', 
+        image,
+        google:true
+      };
+      usuario=new Usuario(data);
+      await usuario.save();
+    }
+    // si el usario en db
+    if(!usuario.status){
+      return res.status(401).json({msg: 'Hable con el admin, usuario bloqueado'})
+    }
+    // generar el jtw
+    const token=await generarJWT(usuario.id);
+
+
+    res.json({id_token,usuario,token})
   } catch (error) {
-    res.status(400).json({msg: "El token no se pudo verificar"})
+    res.status(400).json({msg: "El token e google no es valido."})
   }
 
 }
